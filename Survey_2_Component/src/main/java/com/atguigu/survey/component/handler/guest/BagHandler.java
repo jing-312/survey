@@ -26,7 +26,8 @@ import com.atguigu.survey.page.Page;
 import com.atguigu.survey.utils.GlobaleMessage;
 import com.atguigu.survey.utils.GlobaleNames;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-//jingljigceshio
+//zhege shi shenme 哈哈哈
+
 @Controller
 public class BagHandler {
 	@Autowired
