@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE 
+	configuration 
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 
+	由于很多MyBatis自身特定的设置还是在MyBatis自身配置文件中配置比较好，所以建议保留MyBatis自身的配置文件
+	<settings>
+		<setting name="" value=""/>
+	</settings> 
+	-->
+	
+	<!-- 导入外部属性文件 -->
+	
+	<!-- 配置MyBatis运行时环境 -->
+	<!-- 配置具体的运行时环境 -->
+	<!-- 事务管理器 -->
+	<!-- 数据源 -->
+	
+	<!-- 注册XxxMapper.xml文件 -->
+	
+</configuration>

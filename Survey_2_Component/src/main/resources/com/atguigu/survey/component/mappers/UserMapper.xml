@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.survey.component.mappers.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.survey.entities.guest.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="CHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="CHAR" />
+    <result column="company" property="company" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from guest_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.survey.entities.guest.User" >
+    insert into guest_user (user_id, user_name, user_pwd, 
+      company)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=CHAR}, #{userPwd,jdbcType=CHAR}, 
+      #{company,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.survey.entities.guest.User" >
+    update guest_user
+    set user_name = #{userName,jdbcType=CHAR},
+      user_pwd = #{userPwd,jdbcType=CHAR},
+      company = #{company,jdbcType=BIT}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select user_id, user_name, user_pwd, company
+    from guest_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select user_id, user_name, user_pwd, company
+    from guest_user
+  </select>
+  
+   <select id="getNameCount" resultType="int" >
+   	select count(*) from guest_user where user_name like binary #{userName}
+  </select>
+  <!-- 用来判断用户名密码是否正确 -->
+  
+   <select id="getUserByLogin" resultMap="BaseResultMap" >
+   	select user_id,user_name,user_pwd,company from guest_user
+   	where user_name like binary #{userName} and user_pwd like binary #{userPwd}
+  </select>
+  
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	<!-- 自动扫描的包 -->
+	<!-- use-default-filters="false"表示取消默认的过滤规则 -->
+	<!-- 如果忘记配置，那么SpringMVC的IOC容器会创建Handler和Service的对象，并进行装配。 -->
+	<!-- SpringMVC创建的Service对象没有声明式事务的支持 -->
+	<context:component-scan base-package="com.atguigu.survey.component.*" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- 内置的视图解析器 -->
+	<!-- /WEB-INF/guest/user_login.jsp -->
+	<!-- Handler方法返回值：guest/user_login -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 配置对静态资源访问的支持 -->
+	<mvc:default-servlet-handler/>
+	<!-- SpringMVC标配 -->
+	<mvc:annotation-driven/>
+					
+	<mvc:view-controller	 path="/guest/user/toRegistUI"   		view-name="guest/user_registUI"		/>
+	<mvc:view-controller 	 path="/guest/user/toLoginUI"  			view-name="guest/user_loginUI"		/>
+	<mvc:view-controller 	 path="/guest/survey/toAddUI" 			view-name="guest/survey_addUI"		/>
+	<mvc:view-controller 	 path="/manager/admin/toMainUI" 		view-name="manager/admin_main"	/>
+	<mvc:view-controller 	 path="/manager/admin/toLoginUI" 		view-name="manager/admin_logoUI"	/>
+						
+	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="com.atguigu.survey.e.UserNameAlreadyExistsException">guest/user_registUI</prop>
+				<prop key="com.atguigu.survey.e.UserLoginFailedException">guest/user_loginUI</prop>
+				
+				<prop key="com.atguigu.survey.e.UserOperationForbiddenException">guest/user_loginUI</prop>
+				<prop key="com.atguigu.survey.e.FileTooLargeSaveException">guest/survey_addUI</prop>
+				<prop key="com.atguigu.survey.e.FileTypeInvalidSaveException">guest/survey_addUI</prop>
+				<prop key="com.atguigu.survey.e.FileTooLargeEditException">guest/survey_editUI</prop>
+				<prop key="com.atguigu.survey.e.FileTypeInvalidEditException">guest/survey_editUI</prop>
+				
+				<prop key="com.atguigu.survey.e.BagEmptyException">error</prop>
+				<prop key="com.atguigu.survey.e.SurveyEmptyException">error</prop>
+				<prop key="com.atguigu.survey.e.DeleteSurveyFailedException">error</prop>
+				<prop key="com.atguigu.survey.e.DeleteBagFailedException">error</prop>
+				<prop key="com.atguigu.survey.e.AdminLoginFailedException">manager/admin_logoUI</prop>
+				<prop key="com.atguigu.survey.e.AdminOperationForbiddenException">manager/admin_logoUI</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<mvc:interceptors>
+		<bean class="com.atguigu.survey.interceptors.LoginInterceptor"/>
+	</mvc:interceptors>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+	</bean>
+</beans>

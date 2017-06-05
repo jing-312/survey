@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.survey.component.mappers.SurveyMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.survey.entities.guest.Survey" >
+    <id column="survey_id" property="surveyId" jdbcType="INTEGER" />
+    <result column="survey_name" property="surveyName" jdbcType="CHAR" />
+    <result column="logo_path" property="logoPath" jdbcType="CHAR" />
+    <result column="completed" property="completed" jdbcType="BIT" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from guest_survey
+    where survey_id = #{surveyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.survey.entities.guest.Survey" >
+    insert into guest_survey (survey_id, survey_name, logo_path, 
+      completed, user_id)
+    values (#{surveyId,jdbcType=INTEGER}, #{surveyName,jdbcType=CHAR}, #{logoPath,jdbcType=CHAR}, 
+      #{completed,jdbcType=BIT}, #{userId,jdbcType=INTEGER})
+  </insert>
+	<update id="updateByPrimaryKey" parameterType="com.atguigu.survey.entities.guest.Survey">
+		update guest_survey
+		set survey_name = #{surveyName,jdbcType=CHAR},
+		logo_path = #{logoPath,jdbcType=CHAR}
+		where survey_id = #{surveyId,jdbcType=INTEGER}
+	</update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select survey_id, survey_name, logo_path, completed, user_id
+    from guest_survey
+    where survey_id = #{surveyId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select survey_id, survey_name, logo_path, completed, user_id
+    from guest_survey
+  </select>
+  <select id="getMyUncompletedCount" resultType="int" >
+    select count(*) from guest_survey 
+    where user_id=#{userId} and completed=false
+  </select>
+   <select id="getMyUncompletedList" resultMap="BaseResultMap" >
+    select survey_id, survey_name, logo_path, completed, user_id
+    from guest_survey
+    where user_id=#{userId} and completed=false
+    order by survey_id desc
+    limit #{index},#{pageSize}
+  </select>
+	<resultMap type="com.atguigu.survey.entities.guest.Survey" id="getSurveyDeeplyResultMap">
+		
+		<id column="survey_id" property="surveyId" jdbcType="INTEGER" />
+		<result column="survey_name" property="surveyName" jdbcType="CHAR" />
+		<result column="logo_path" property="logoPath" jdbcType="CHAR" />
+		<result column="completed" property="completed" jdbcType="BIT" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		
+		<collection property="bagSet" ofType="com.atguigu.survey.entities.guest.Bag">
+			<id column="bag_id" property="bagId" jdbcType="INTEGER" />
+		    <result column="bag_name" property="bagName" jdbcType="CHAR" />
+		    <result column="bag_order" property="bagOrder" jdbcType="INTEGER" />
+		    
+		    <!-- 如果这里配置了surveyId，那么即使没有查询到Bag对象，MyBatis也会创建一个空的 -->
+		    <!-- <result column="survey_id" property="surveyId" jdbcType="INTEGER" /> -->
+		    
+		    <collection property="questionSet" ofType="com.atguigu.survey.entities.guest.Question">
+		    	<id column="question_id" property="questionId" jdbcType="INTEGER" />
+			    <result column="question_name" property="questionName" jdbcType="CHAR" />
+			    <result column="question_type" property="questionType" jdbcType="INTEGER" />
+			    <result column="question_option" property="questionOption" jdbcType="CHAR" />
+		    </collection>
+		</collection>
+		
+	</resultMap>
+	
+	<select id="getSurveyDeeply" resultMap="getSurveyDeeplyResultMap">
+		SELECT 
+			s.survey_id,
+			survey_name,
+			logo_path,
+			completed,
+			user_id,
+			b.bag_id,
+			bag_name,
+			bag_order,
+			q.question_id,
+			question_name,
+			question_type,
+			question_option
+		FROM 
+			guest_survey s LEFT JOIN guest_bag b ON s.`survey_id`=b.`survey_id`
+			LEFT JOIN guest_question q ON q.`bag_id`=b.`bag_id`
+		WHERE s.`survey_id`=#{surveyId}
+		order by bag_order,question_id
+	</select>
+	
+	<update id="updateCompleteStatus">
+		update guest_survey set completed=true
+		where survey_id=#{surveyId}
+	</update>
+	
+	<select id="getAllAvailableCount" resultType="int">
+	 	select count(*) from guest_survey 
+    	where completed=true
+	</select>
+	
+	<select id="getAllAvailableList" resultMap="BaseResultMap" >
+	 select survey_id, survey_name, logo_path, completed, user_id
+	    from guest_survey
+	    where completed=true
+	    order by survey_id desc
+	    limit #{index},#{pageSize}
+	</select>
+	
+</mapper>

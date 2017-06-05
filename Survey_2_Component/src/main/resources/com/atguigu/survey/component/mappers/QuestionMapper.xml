@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.survey.component.mappers.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.survey.entities.guest.Question" >
+    <id column="question_id" property="questionId" jdbcType="INTEGER" />
+    <result column="question_name" property="questionName" jdbcType="CHAR" />
+    <result column="question_type" property="questionType" jdbcType="INTEGER" />
+    <result column="question_options" property="questionOptions" jdbcType="CHAR" />
+    <result column="bag_id" property="bagId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from guest_question
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.survey.entities.guest.Question" >
+    insert into guest_question ( question_name, question_type, 
+      question_option, bag_id)
+    values ( #{questionName,jdbcType=CHAR}, #{questionType,jdbcType=INTEGER}, 
+      #{questionOption,jdbcType=CHAR}, #{bagId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.survey.entities.guest.Question" >
+    update guest_question
+    set question_name = #{questionName,jdbcType=CHAR},
+      question_type = #{questionType,jdbcType=INTEGER},
+      question_option = #{questionOption,jdbcType=CHAR}
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select question_id, question_name, question_type, question_option, bag_id
+    from guest_question
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select question_id, question_name, question_type, question_options, bag_id
+    from guest_question
+  </select>
+  
+  <delete id="deleteByBagId"  >
+   delete from guest_question where bag_id=#{bagId}
+  </delete>
+  
+  <delete id="deleteQuestionBySurveyId"  >
+   delete from guest_question where bag_id in 
+   	(select bag_id from guest_bag where survey_id=#{surveyId})
+  </delete>
+  
+  
+  <insert id="batchSaveQuestion">
+  	<foreach collection="questionSet" item="question" separator=";">
+    insert into guest_question (question_name, question_type, 
+      question_option, bag_id)
+    values (#{question.questionName,jdbcType=CHAR}, #{question.questionType,jdbcType=INTEGER}, 
+      #{question.questionOption,jdbcType=CHAR}, #{bagId,jdbcType=INTEGER})
+  	</foreach>
+  </insert>
+</mapper>

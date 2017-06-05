@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.survey.component.mappers.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.survey.entities.manager.Admin" >
+    <id column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="admin_name" property="adminName" jdbcType="CHAR" />
+    <result column="admin_pwd" property="adminPwd" jdbcType="CHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager_admin
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.survey.entities.manager.Admin" >
+    insert into manager_admin (admin_id, admin_name, admin_pwd
+      )
+    values (#{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=CHAR}, #{adminPwd,jdbcType=CHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.survey.entities.manager.Admin" >
+    update manager_admin
+    set admin_name = #{adminName,jdbcType=CHAR},
+      admin_pwd = #{adminPwd,jdbcType=CHAR}
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select admin_id, admin_name, admin_pwd
+    from manager_admin
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select admin_id, admin_name, admin_pwd
+    from manager_admin
+  </select>
+  <select id="selectAdminForLogin" resultMap="BaseResultMap">
+   select  admin_name, admin_pwd
+    from manager_admin
+    where admin_name=#{adminName} and admin_pwd=#{md5AdminPwd}
+  </select>
+</mapper>
