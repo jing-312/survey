@@ -26,6 +26,13 @@
 					<li><a href="manager/admin/logout">退出登录</a></li>
 					<li><a href="manager/statitics/showAllAvailable">统计调查</a></li>
 					<li><a href="manager/res/showList">资源列表</a></li>
+					<li><a href="manager/auth/addAuth">创建权限</a></li>
+					<li><a href="manager/auth/showList">权限列表</a></li>
+					<li><a href="manager/role/addRole">创建角色</a></li>
+					<li><a href="manager/role/showList">角色列表</a></li>
+					<li><a href="manager/role/showList">创建账号</a></li>
+					<li><a href="manager/role/showList">账号列表</a></li>
+					<li><a href="manager/role/showList">日志列表</a></li>
 				</c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">

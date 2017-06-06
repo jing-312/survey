@@ -33,6 +33,7 @@
 	<mvc:view-controller path="/guest/survey/toAddUI" 	 view-name="guest/survey_addUI"		/>
 	<mvc:view-controller path="/manager/admin/toMainUI"  view-name="manager/admin_main"	/>
 	<mvc:view-controller path="/manager/admin/toLoginUI" view-name="manager/admin_loginUI"/>
+	<mvc:view-controller path="/manager/auth/addAuth" view-name="manager/manager_addAuth"/>
 						
 	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">

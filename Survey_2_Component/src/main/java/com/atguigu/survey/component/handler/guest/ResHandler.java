@@ -25,7 +25,7 @@ public class ResHandler {
 	private ResService resService;
 	
 	/**
-	 * 实现了对资源状态更改的具体操作
+	 * 瀹炵幇浜嗗璧勬簮鐘舵�佹洿鏀圭殑鍏蜂綋鎿嶄綔
 	 * @param resId
 	 * @return
 	 */
@@ -53,7 +53,7 @@ public class ResHandler {
 			
 			boolean publicStatus = resService.getResStatus(resId);
 			
-			statusResult = publicStatus ? "公共资源" : "受保护资源";
+			statusResult = publicStatus ? "鍏叡璧勬簮" : "鍙椾繚鎶よ祫婧�";
 		}
 		
 		Map<String,Object> jsonMap = new HashMap<String,Object>();
@@ -65,7 +65,7 @@ public class ResHandler {
 		
 	}
 	/**
-	 * 实现了具体的批量删除功能。
+	 * 瀹炵幇浜嗗叿浣撶殑鎵归噺鍒犻櫎鍔熻兘銆�
 	 * @param resIdList
 	 * @return
 	 * @throws Exception 
@@ -87,7 +87,7 @@ public class ResHandler {
 		return "redirect:/manager/res/showList";
 	}
 	/**
-	 * 用来处理显示资源列表的方法。
+	 * 鐢ㄦ潵澶勭悊鏄剧ず璧勬簮鍒楄〃鐨勬柟娉曘��
 	 * @param map
 	 * @return
 	 */
