@@ -1,5 +1,7 @@
 package com.atguigu.survey.component.service.m;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,16 @@ public class ResServiceImpl implements ResService {
 
 	public void saveRes(Res res) {
 		resMapper.insert(res);
+	}
+
+	public List<Res> getResAll() {
+		
+		return resMapper.selectAll();
+	}
+
+	public void batchDelete(List<Integer> resIdList) {
+		
+		resMapper.batchDelete(resIdList);
 	}
 
 	

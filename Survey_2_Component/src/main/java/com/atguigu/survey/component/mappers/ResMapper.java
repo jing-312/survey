@@ -3,6 +3,8 @@ package com.atguigu.survey.component.mappers;
 import com.atguigu.survey.entities.manager.Res;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface ResMapper {
     int deleteByPrimaryKey(Integer resId);
 
@@ -19,6 +21,8 @@ public interface ResMapper {
 	Integer getSystemMaxPos();
 
 	Integer getSystemMaxCode(Integer maxPos);
+
+	void batchDelete(@Param("resIdList")List<Integer> resIdList);
 
 	
 }

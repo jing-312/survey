@@ -14,5 +14,6 @@ public class GlobaleMessage {
 	public static final String BAG_ORDER_DUPLICATE = "有相同序号，请您改正后再次提交";
 	public static final String Admin_Login_Failed = "管理员登录失败";
 	public static final String Admin_OPERATION_FORBIDDEN = "管理员操作失败！！，请重新登录";
+	public static final String REMOVE_RES_FAILED = "对不起批量删除失败！";
 	
 }

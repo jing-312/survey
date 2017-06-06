@@ -25,6 +25,7 @@
 					<li><a>欢迎您：${sessionScope.loginAdmin.adminName }</a></li>
 					<li><a href="manager/admin/logout">退出登录</a></li>
 					<li><a href="manager/statitics/showAllAvailable">统计调查</a></li>
+					<li><a href="manager/res/showList">资源列表</a></li>
 				</c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">
