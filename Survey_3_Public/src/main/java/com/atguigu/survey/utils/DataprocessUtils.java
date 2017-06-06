@@ -384,5 +384,16 @@ public class DataprocessUtils {
 		
 		return Integer.parseInt(questionIdStr);
 	}
-
+	/**
+	 * 用来实现资源收集，对资源的统一处理。能保证资源的统一性。
+	 * @param servletPath
+	 * @return
+	 */
+	public static String servletPathCut( String  servletPath){
+		
+		String[] split = servletPath.split("/");
+		
+		return "/"+split[1]+"/"+split[2]+"/"+split[3];
+		
+	}
 }

@@ -58,6 +58,7 @@
 	
 	<mvc:interceptors>
 		<bean class="com.atguigu.survey.interceptors.LoginInterceptor"/>
+		<bean class="com.atguigu.survey.interceptors.ResLnterceptor"/>
 	</mvc:interceptors>
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

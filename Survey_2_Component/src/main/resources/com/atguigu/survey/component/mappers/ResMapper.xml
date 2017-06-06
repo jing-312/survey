@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.survey.component.mappers.ResMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.survey.entities.manager.Res" >
+    <id column="res_id" property="resId" jdbcType="INTEGER" />
+    <result column="servlet_path" property="servletPath" jdbcType="CHAR" />
+    <result column="public_status" property="publicStatus" jdbcType="BIT" />
+    <result column="res_code" property="resCode" jdbcType="INTEGER" />
+    <result column="res_pos" property="resPos" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager_res
+    where res_id = #{resId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.survey.entities.manager.Res" >
+    insert into manager_res (res_id, servlet_path, public_status, 
+      res_code, res_pos)
+    values (#{resId,jdbcType=INTEGER}, #{servletPath,jdbcType=CHAR}, #{publicStatus,jdbcType=BIT}, 
+      #{resCode,jdbcType=INTEGER}, #{resPos,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.survey.entities.manager.Res" >
+    update manager_res
+    set servlet_path = #{servletPath,jdbcType=CHAR},
+      public_status = #{publicStatus,jdbcType=BIT},
+      res_code = #{resCode,jdbcType=INTEGER},
+      res_pos = #{resPos,jdbcType=INTEGER}
+    where res_id = #{resId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select res_id, servlet_path, public_status, res_code, res_pos
+    from manager_res
+    where res_id = #{resId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select res_id, servlet_path, public_status, res_code, res_pos
+    from manager_res
+  </select>
+  <select id="checkResExists" resultType="int">
+  	select count(*) from manager_res
+  	where servlet_path=#{servletPath}
+  </select>
+  <select id="getSystemMaxPos" resultType="java.lang.Integer">
+  	select max(res_pos) from manager_res
+  </select>
+  <select id="getSystemMaxCode" resultType="java.lang.Integer">
+  	select max(res_code) from manager_res where res_pos=#{maxPos}
+  </select>
+  <delete id="batchDelete">
+  	delete from manager_res
+  	where res_id in 
+  	<foreach collection="resIdList" item="resId" open="(" close=")" separator=",">#{resId}</foreach>
+  </delete>
+  <update id="updateStatus">
+  	UPDATE manager_res SET public_status = !public_status
+	WHERE res_id=#{resId}
+  </update>
+  <select id="getResStatus" resultType="boolean">
+  	select public_status from manager_res where res_id=#{resId}
+  </select>
+</mapper>
