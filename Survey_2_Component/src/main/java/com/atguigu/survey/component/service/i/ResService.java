@@ -18,4 +18,8 @@ public interface ResService {
 
 	void batchDelete(List<Integer> resIdList);
 
+	void updateStatus(Integer resId);
+
+	boolean getResStatus(Integer resId);
+
 }

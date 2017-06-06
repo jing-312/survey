@@ -24,5 +24,9 @@ public interface ResMapper {
 
 	void batchDelete(@Param("resIdList")List<Integer> resIdList);
 
+	void updateStatus(Integer resId);
+
+	boolean getResStatus(Integer resId);
+
 	
 }

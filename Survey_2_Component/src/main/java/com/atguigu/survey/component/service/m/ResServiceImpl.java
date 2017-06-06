@@ -46,5 +46,15 @@ public class ResServiceImpl implements ResService {
 		resMapper.batchDelete(resIdList);
 	}
 
+	public void updateStatus(Integer resId) {
+		
+		resMapper.updateStatus(resId);
+	}
+
+	public boolean getResStatus(Integer resId) {
+		
+		return resMapper.getResStatus(resId);
+	}
+
 	
 }

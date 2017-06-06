@@ -46,7 +46,7 @@
 		</javaClientGenerator>
 
 		<!-- 数据库表名字和我们的entity类对应的映射指定 -->
-		<table tableName="MANAGER_ADMIN" domainObjectName="Admin" />
+		<table tableName="MANAGER_ROLE" domainObjectName="Role" />
 
 	</context>
 </generatorConfiguration>

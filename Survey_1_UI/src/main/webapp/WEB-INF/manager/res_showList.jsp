@@ -1,6 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/res_jsp/base.jsp"%>
+<script type="text/javascript">
+	$(function(){
+		$(":button").clike(function(){
+			var $thisBtn = $(this);
+			var resId = this.id;
+			
+			var url = "${pagrContext.request.contextPath}/manager/res/toggleResStatus";
+			var paramData = {"resId":resId,"time":new Date()}
+			var callBack = function(respData){
+				var invokeResult = respData.respData;
+				if(invokeResult=="success"){
+					alert("操作成功！");
+					$thisBtn.val(respData.statusResult);
+					$thisBtn.toggleClass("btn-success btn-primary");
+				}
+				
+				if(invokeResult=="failed"){
+					alert("操作失败！");
+				}
+			}
+			var type = "json";
+			$.post(url, paramData, callBack, type);
+		});
+	});
+</script>
 <body>
 
 	<div class="container">

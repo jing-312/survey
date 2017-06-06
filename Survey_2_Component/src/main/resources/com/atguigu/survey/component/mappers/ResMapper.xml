@@ -57,4 +57,5 @@
   <select id="getResStatus" resultType="boolean">
   	select public_status from manager_res where res_id=#{resId}
   </select>
+  
 </mapper>
