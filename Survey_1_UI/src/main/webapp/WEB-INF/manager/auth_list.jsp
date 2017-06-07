@@ -3,25 +3,25 @@
 <%@ include file="/res_jsp/base.jsp"%>
 <script type="text/javascript">
 	$(function(){
-		$(":button").click(function(){
-			var $thisBtn = $(this);
-			var resId = this.id;
-			var url = "${pageContext.request.contextPath}/manager/res/toggleResStatus";
-			var paramData = {"resId":resId,"time":new Date()};
-			var callBack = function(respData){
-				var invokeResult = respData.invokeResult;
-				if(invokeResult == "success") {
-					alert("操作成功！");
-					$thisBtn.val(respData.statusResult);
-					$thisBtn.toggleClass("btn-success btn-primary");
+		$("[name=authName]").change(function(){
+			var authId = this.id;
+			var authName = this.value;
+			
+			var url="${pageContext.request.contextPath}/manager/auth/updateAuth";
+			var paramData={"authId":authId,"authName":authName,"time":new Date()};
+			var callBack=function(respData){
+				var message = respData.message;
+				if(message == "success"){
+					alert("更新权限名称成功！");
 				}
-				if(invokeResult == "failed") {
-					alert("操作失败！");
+				if(message == "failed"){
+					alert("更新权限名称失败！");
 				}
-			};
-			var type = "json";
-			$.post(url, paramData, callBack, type);
-		});
+			}
+			var type="json";
+			
+			$.post(url,paramData,callBack,type);
+		});		
 	});
 </script>
 <body>

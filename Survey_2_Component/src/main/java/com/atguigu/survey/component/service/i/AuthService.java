@@ -12,5 +12,7 @@ public interface AuthService {
 
 	void batchDelete(List<Integer> authIdList);
 
+	void updateAuthName(Auth auth);
+
 
 }

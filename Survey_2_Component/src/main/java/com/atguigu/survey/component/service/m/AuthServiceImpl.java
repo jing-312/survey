@@ -34,4 +34,10 @@ public class AuthServiceImpl implements AuthService{
 		
 	}
 
+
+	public void updateAuthName(Auth auth) {
+	authMapper.updateByPrimaryKey(auth);
+		
+	}
+
 }

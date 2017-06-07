@@ -16,5 +16,6 @@ public class GlobaleMessage {
 	public static final String Admin_OPERATION_FORBIDDEN = "管理员操作失败！！，请重新登录";
 	public static final String REMOVE_RES_FAILED = "对不起批量删除失败！";
 	public static final String REMOVE_AUTH_FAILED = "对不起删除权限失败！";
+	public static final String REMOVE_Role_FAILED = "对不起删除规则失败";
 	
 }

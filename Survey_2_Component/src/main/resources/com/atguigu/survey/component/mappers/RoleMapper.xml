@@ -27,4 +27,8 @@
     select role_id, role_name
     from manager_role
   </select>
+  <delete id="batchDelete">
+  	delete from manager_role where role_id in 
+  	<foreach collection="roleIdList" item="roleId" open="(" close=")" separator=",">#{roleId}</foreach>
+  </delete>
 </mapper>

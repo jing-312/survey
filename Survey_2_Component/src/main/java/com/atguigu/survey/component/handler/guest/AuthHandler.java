@@ -1,6 +1,7 @@
 package com.atguigu.survey.component.handler.guest;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +23,32 @@ public class AuthHandler {
 	@Autowired
 	private AuthService authService;
 	
-	
-	
+	/**
+	 * 使用Ajax完成了权限的更新更新功能。
+	 * @param auth
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/manager/auth/updateAuth")
+	public Map<String,String> updateAuthName(Auth auth){
+		
+		Map<String,String> jsonMap = new HashMap<String, String>();
+		try {
+			authService.updateAuthName(auth);
+			jsonMap.put("message","success" );
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonMap.put("message", "failed");
+		}
+		
+		return jsonMap;
+		
+	}
+	/**
+	 * 此方法实现了权限的批量删除功能。
+	 * @param authIdList
+	 * @return
+	 */
 	@RequestMapping("/manager/auth/batchDelete")
 	public String batchDelete(@RequestParam(value="authIdList",required=false) List<Integer> authIdList ){
 		if(authIdList!=null && authIdList.size()>0){
