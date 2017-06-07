@@ -3,6 +3,8 @@ package com.atguigu.survey.component.mappers;
 import com.atguigu.survey.entities.manager.Auth;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface AuthMapper {
     int deleteByPrimaryKey(Integer authId);
 
@@ -13,4 +15,9 @@ public interface AuthMapper {
     List<Auth> selectAll();
 
     int updateByPrimaryKey(Auth record);
+
+	void insert(String authName);
+
+	void batchDelete(@Param("authIdList")List<Integer> authIdList);
+
 }

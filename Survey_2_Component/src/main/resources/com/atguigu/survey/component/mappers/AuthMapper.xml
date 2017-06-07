@@ -10,8 +10,8 @@
     where auth_id = #{authId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.atguigu.survey.entities.manager.Auth" >
-    insert into manager_auth (auth_id, auth_name)
-    values (#{authId,jdbcType=INTEGER}, #{authName,jdbcType=CHAR})
+    insert into manager_auth (auth_name)
+    values (#{authName,jdbcType=CHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.atguigu.survey.entities.manager.Auth" >
     update manager_auth
@@ -27,4 +27,8 @@
     select auth_id, auth_name
     from manager_auth
   </select>
+  <delete id="batchDelete">
+  delete from manager_auth where auth_id in
+  <foreach collection="authIdList" item="authId" open="(" close=")" separator=",">#{authId}</foreach>
+  </delete>
 </mapper>
