@@ -1,12 +1,23 @@
 package com.atguigu.survey.entities.manager;
 
+import java.util.Set;
+
 public class Role {
     private Integer roleId;
 
     private String roleName;
 
+    private Set<Auth> authSet;
     
-    @Override
+    public Set<Auth> getAuthSet() {
+		return authSet;
+	}
+
+	public void setAuthSet(Set<Auth> authSet) {
+		this.authSet = authSet;
+	}
+
+	@Override
 	public String toString() {
 		return "Role [roleId=" + roleId + ", roleName=" + roleName + "]";
 	}

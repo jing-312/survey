@@ -10,9 +10,17 @@ public class User {
     private Boolean company;
     
     
-    
+    private String CodeArrStr;
 
-    public User() {
+    public String getCodeArrStr() {
+		return CodeArrStr;
+	}
+
+	public void setCodeArrStr(String codeArrStr) {
+		CodeArrStr = codeArrStr;
+	}
+
+	public User() {
 		super();
 	}
 

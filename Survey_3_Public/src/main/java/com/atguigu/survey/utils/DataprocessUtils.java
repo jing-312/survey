@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletRequest;
@@ -24,6 +25,9 @@ import javax.servlet.jsp.jstl.core.LoopTagStatus;
 
 import com.atguigu.survey.entities.guest.Bag;
 import com.atguigu.survey.entities.guest.Question;
+import com.atguigu.survey.entities.manager.Auth;
+import com.atguigu.survey.entities.manager.Res;
+import com.atguigu.survey.entities.manager.Role;
 import com.google.gson.Gson;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -395,5 +399,97 @@ public class DataprocessUtils {
 		
 		return "/"+split[1]+"/"+split[2]+"/"+split[3];
 		
+	}
+
+/*/**
+	 * 根据深度加载的角色集合计算用户权限码数组
+	 * @param roleSet
+	 * @param maxPos 系统中最大的权限位的值，加1后就是权限码数组的长度
+	 * @return
+	 */
+	public static String calculateCodeArr(Set<Role> roleSet, Integer maxPos) {
+		
+		//1.计算权限码数组的长度
+		int length = maxPos + 1;
+		
+		//2.声明一个数组，用来保存计算得到的权限码数值
+		int [] codeArr = new int[length];
+		
+		//3.逐层遍历
+		for (Role role : roleSet) {
+			
+			Set<Auth> authSet = role.getAuthSet();
+			
+			for (Auth auth : authSet) {
+				
+				Set<Res> resSet = auth.getResSet();
+				
+				for (Res res : resSet) {
+					
+					//4.获取res对象的权限码
+					Integer resCode = res.getResCode();
+					
+					//5.获取res对象的权限位
+					Integer resPos = res.getResPos();
+					
+					//6.以权限位为下标从codeArr取出旧值
+					int oldValue = codeArr[resPos];
+					
+					//7.将旧值和resCode做或运算，得到新值
+					int newValue = oldValue | resCode;
+					
+					//8.将新值放回codeArr中原来的位置
+					codeArr[resPos] = newValue;
+					
+				}
+				
+			}
+			
+		}
+		
+		//9.将codeArr转换为字符串
+		return convertCodeArr2Str(codeArr);
+	}
+	/**
+	 * 将权限码数组转换为逗号分隔的字符串
+	 * @param codeArr
+	 * @return
+	 */
+	public static String convertCodeArr2Str(int [] codeArr) {
+		
+		StringBuilder builder = new StringBuilder();
+		
+		for(int i = 0; i < codeArr.length; i++) {
+			builder.append(",").append(codeArr[i]);
+		}
+		
+		return builder.substring(1);
+	}
+	/**
+	 * 权限验证工具方法
+	 * @param codeArrStr
+	 * @param res
+	 * @return
+	 */
+	public static boolean checkAuthority(String codeArrStr, Res res) {
+		
+		//1.从res对象中获取权限码和权限位的值
+		Integer resCode = res.getResCode();
+		Integer resPos = res.getResPos();
+		
+		//2.将codeArrStr转换为数组
+		String[] split = codeArrStr.split(",");
+		
+		//3.以resPos为下标从数组中取出元素
+		String codeStr = split[resPos];
+		
+		//4.将codeStr转换为整型
+		Integer code = Integer.parseInt(codeStr);
+		
+		//5.进行与运算
+		int result = resCode & code;
+		
+		//6.结果非零时表示其有权限
+		return result != 0;
 	}
 }

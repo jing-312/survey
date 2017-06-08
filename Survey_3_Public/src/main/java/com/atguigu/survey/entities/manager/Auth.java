@@ -1,12 +1,23 @@
 package com.atguigu.survey.entities.manager;
 
+import java.util.Set;
+
 public class Auth {
     private Integer authId;
 
     private String authName;
-
     
-    public Auth(Integer authId, String authName) {
+    private Set<Res> resSet;
+    
+    public Set<Res> getResSet() {
+		return resSet;
+	}
+
+	public void setResSet(Set<Res> resSet) {
+		this.resSet = resSet;
+	}
+
+	public Auth(Integer authId, String authName) {
 		super();
 		this.authId = authId;
 		this.authName = authName;

@@ -28,5 +28,7 @@ public interface ResMapper {
 
 	boolean getResStatus(Integer resId);
 
+	Res getResByPath(String servletPath);
+
 	
 }

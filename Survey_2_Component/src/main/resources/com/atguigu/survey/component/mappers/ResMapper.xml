@@ -57,4 +57,9 @@
   <select id="getResStatus" resultType="boolean">
   	select public_status from manager_res where res_id=#{resId}
   </select>
+   <select id="getResByPath" resultMap="BaseResultMap">
+  	select res_id, servlet_path, public_status, res_code, res_pos
+    from manager_res
+    where servlet_path=#{servletPath}
+  </select>
 </mapper>

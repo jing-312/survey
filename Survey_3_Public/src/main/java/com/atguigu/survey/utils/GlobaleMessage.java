@@ -19,5 +19,6 @@ public class GlobaleMessage {
 	public static final String REMOVE_Role_FAILED = "对不起删除规则失败";
 	public static final String ADMIN_NAME_EXISTS = "账号名已经存在，请重新创建";
 	public static final String REMOVE_ADMIN_FAILED = "删除管理员账号失败";
+	public static final String HAS_NO_AUTHORITY = "您没有权限访问此资源！";
 	
 }

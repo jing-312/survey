@@ -1,15 +1,19 @@
 package com.atguigu.survey.component.service.m;
 
 import java.util.List;
+import java.util.Set;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.atguigu.survey.component.mappers.AdminMapper;
+import com.atguigu.survey.component.mappers.ResMapper;
 import com.atguigu.survey.component.service.i.AdminService;
 import com.atguigu.survey.e.AdminLoginFailedException;
 import com.atguigu.survey.e.AdminNameExistsException;
 import com.atguigu.survey.entities.manager.Admin;
+import com.atguigu.survey.entities.manager.Role;
 import com.atguigu.survey.utils.DataprocessUtils;
 import com.atguigu.survey.utils.GlobaleMessage;
 
@@ -19,6 +23,9 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
 
+	@Autowired
+	private ResMapper resMapper;
+	
 	public Admin login(Admin admin) {
 		
 		String adminName = admin.getAdminName();
@@ -69,5 +76,28 @@ public class AdminServiceImpl implements AdminService {
 		adminMapper.batchDelete(adminIdList);
 		
 	}
+
+	public List<Integer> getCurrentRoleIdList(Integer adminId) {
+		return adminMapper.getCurrentRoleIdList(adminId);
+	}
+
+	public void updateRelationship(Integer adminId,List<Integer> roleIdList) {
+		
+			adminMapper.deleteOldRelationship(adminId);
+			
+			if(roleIdList != null) {
+				adminMapper.saveNewRelationship(adminId, roleIdList);
+			}
+			
+			Set<Role> roleSet = adminMapper.getRoleSetDeeply(adminId);
+			
+			Integer maxPos = resMapper.getSystemMaxPos();
+			
+			String codeArr = DataprocessUtils.calculateCodeArr(roleSet, maxPos);
+			
+			adminMapper.updateCodeArr(adminId, codeArr);
+			
+		}
+	
 	
 }

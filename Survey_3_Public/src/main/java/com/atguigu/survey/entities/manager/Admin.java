@@ -1,27 +1,51 @@
 package com.atguigu.survey.entities.manager;
 
+import java.util.Set;
+
 public class Admin {
     private Integer adminId;
 
     private String adminName;
 
     private String adminPwd;
-
     
-    public Admin(Integer adminId, String adminName, String adminPwd) {
-		super();
-		this.adminId = adminId;
-		this.adminName = adminName;
-		this.adminPwd = adminPwd;
+    private String CodeArrStr;
+
+    private Set<Role> roleSet;
+
+	public Set<Role> getRoleSet() {
+		return roleSet;
+	}
+
+	public void setRoleSet(Set<Role> roleSet) {
+		this.roleSet = roleSet;
 	}
 
 	public Admin() {
 		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Admin(Integer adminId, String adminName, String adminPwd, String codeArrStr) {
+		super();
+		this.adminId = adminId;
+		this.adminName = adminName;
+		this.adminPwd = adminPwd;
+		CodeArrStr = codeArrStr;
 	}
 
 	@Override
 	public String toString() {
-		return "Admin [adminId=" + adminId + ", adminName=" + adminName + ", adminPwd=" + adminPwd + "]";
+		return "Admin [adminId=" + adminId + ", adminName=" + adminName + ", adminPwd=" + adminPwd + ", CodeArrStr="
+				+ CodeArrStr + "]";
+	}
+
+	public String getCodeArrStr() {
+		return CodeArrStr;
+	}
+
+	public void setCodeArrStr(String codeArrStr) {
+		CodeArrStr = codeArrStr;
 	}
 
 	public Integer getAdminId() {

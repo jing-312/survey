@@ -14,4 +14,8 @@ public interface AdminService {
 
 	void batchDelete(List<Integer> adminIdList);
 
+	List<Integer> getCurrentRoleIdList(Integer adminId);
+
+	void updateRelationship(Integer adminId, List<Integer> roleIdList);
+
 }

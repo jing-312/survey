@@ -22,4 +22,6 @@ public interface ResService {
 
 	boolean getResStatus(Integer resId);
 
+	Res getResByPath(String servletPath);
+
 }

@@ -29,4 +29,8 @@ public class RoleServiceImpl implements RoleService {
 	public void updateRole(Role role) {
 		roleMapper.updateByPrimaryKey(role);
 	}
+	
+	public List<Role> getRoleList() {
+		return roleMapper.selectAll();
+	}
 }

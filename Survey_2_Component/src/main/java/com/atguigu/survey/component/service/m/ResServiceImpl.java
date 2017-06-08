@@ -56,5 +56,10 @@ public class ResServiceImpl implements ResService {
 		return resMapper.getResStatus(resId);
 	}
 
+	public Res getResByPath(String servletPath) {
+		
+		return resMapper.getResByPath(servletPath);
+	}
+
 	
 }
