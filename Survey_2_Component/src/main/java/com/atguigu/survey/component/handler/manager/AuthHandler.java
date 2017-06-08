@@ -1,4 +1,4 @@
-package com.atguigu.survey.component.handler.guest;
+package com.atguigu.survey.component.handler.manager;
 
 
 import java.util.HashMap;

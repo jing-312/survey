@@ -1,6 +1,7 @@
-package com.atguigu.survey.component.handler.guest;
+package com.atguigu.survey.component.handler.manager;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.atguigu.survey.component.service.i.RoleService;
 import com.atguigu.survey.e.RemoveRoleFailedException;
@@ -22,6 +24,28 @@ public class RoleHandler {
 	@Autowired
 	private RoleService roleService;
 	
+	@ResponseBody
+	@RequestMapping("/manager/role/updateRole")
+	public Map<String,String> updateRole(Role role){
+		
+	Map<String,String> jsonMap = new HashMap<String,String>();
+	
+	try {
+		
+		roleService.updateRole(role);
+		
+		jsonMap.put("message","success");
+		
+	} catch (Exception e) {
+		
+		e.printStackTrace();
+		
+		jsonMap.put("message","failed");
+	}
+	
+		return jsonMap;
+		
+	}
 	/**
 	 * 批量删除角色的具体实现方法。
 	 * @param roleIdList

@@ -12,4 +12,6 @@ public interface RoleService {
 
 	void batchDelete(List<Integer> roleIdList);
 
+	void updateRole(Role role);
+
 }

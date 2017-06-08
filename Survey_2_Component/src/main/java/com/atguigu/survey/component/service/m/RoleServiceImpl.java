@@ -26,4 +26,7 @@ public class RoleServiceImpl implements RoleService {
 	public void batchDelete(List<Integer> roleIdList) {
 		roleMapper.batchDelete(roleIdList);
 	}
+	public void updateRole(Role role) {
+		roleMapper.updateByPrimaryKey(role);
+	}
 }

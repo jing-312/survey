@@ -35,6 +35,7 @@
 	<mvc:view-controller path="/manager/admin/toLoginUI" view-name="manager/admin_loginUI"/>
 	<mvc:view-controller path="/manager/auth/addAuth" view-name="manager/manager_addAuth"/>
 	<mvc:view-controller path="/manager/role/addRole" view-name="manager/manager_addRole"/>
+	<mvc:view-controller path="/manager/admin/addAdmin" view-name="manager/manager_addAdmin"/>
 						
 	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">

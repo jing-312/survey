@@ -36,4 +36,8 @@
     from manager_admin
     where admin_name=#{adminName} and admin_pwd=#{md5AdminPwd}
   </select>
+  <select id="selectAdminByName" resultType="int">
+  select count(*)
+		from manager_admin where admin_name=#{adminName}
+  </select>
 </mapper>

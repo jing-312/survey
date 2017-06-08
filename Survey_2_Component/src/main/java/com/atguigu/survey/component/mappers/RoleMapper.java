@@ -17,4 +17,5 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
 
 	void batchDelete(@Param("roleIdList")List<Integer> roleIdList);
+
 }

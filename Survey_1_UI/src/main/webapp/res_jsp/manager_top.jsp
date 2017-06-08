@@ -30,8 +30,8 @@
 					<li><a href="manager/auth/showList">权限列表</a></li>
 					<li><a href="manager/role/addRole">创建角色</a></li>
 					<li><a href="manager/role/showList">角色列表</a></li>
-					<li><a href="manager/role/showList">创建账号</a></li>
-					<li><a href="manager/role/showList">账号列表</a></li>
+					<li><a href="manager/admin/addAdmin">创建账号</a></li>
+					<li><a href="manager/admin/showList">账号列表</a></li>
 					<li><a href="manager/role/showList">日志列表</a></li>
 				</c:if>
             </ul>

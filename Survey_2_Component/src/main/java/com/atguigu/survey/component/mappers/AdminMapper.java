@@ -17,4 +17,8 @@ public interface AdminMapper {
     int updateByPrimaryKey(Admin record);
 
 	Admin selectAdminForLogin(@Param("adminName")String adminName,@Param("md5AdminPwd") String md5AdminPwd);
+
+	int selectAdminByName(String adminName);
+
+	void batchDelete(@Param("adminIdList")List<Integer> adminIdList);
 }

@@ -4,8 +4,21 @@
 <script type="text/javascript">
 	$(function(){
 		$("[name='roleName']").change(function(){
-			alert($);
-
+			var roleId = this.id;
+			var roleName = this.value;
+			
+			var url = "${pageContext.request.contextPath}/manager/role/updateRole";
+			var DataParam = {"roleId":roleId,"roleName":roleName,"time":new Date()};
+			var callBack = function(respData){
+				var message = respData.message;
+				if(message == "success"){
+					alert("更新role名称成功！");
+				}else {
+					alert("更新role名称失败！");
+				}
+			}
+			var type = "json";
+			$.post(url,DataParam,callBack,type);
 		});
 	});
 </script>
