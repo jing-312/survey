@@ -37,4 +37,8 @@ public interface RoleMapper {
 	void removeOldRelationship(Integer roleId);
 
 	void saveNewRelationship(@Param("roleId") Integer roleId, @Param("authIdList") List<Integer> authIdList);
+
+	void dispatcher(@Param("roleId")Integer roleId,  @Param("authIdList")List<Integer> authIdList);
+
+	Role getRoleDeeplyByName(String roleName);
 }

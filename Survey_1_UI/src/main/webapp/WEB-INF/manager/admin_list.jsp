@@ -59,7 +59,7 @@
 								</td>
 								
 								<td>
-									<a class="btn btn-default" href="manager/admin/toDispatcherUI/${admin.adminId}">权限分配资源</a>
+									<a class="btn btn-default" href="manager/admin/toDispatcherUI/${admin.adminId}">用户分配角色</a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -73,7 +73,6 @@
 			</form>
 		</div>
 	</div>
-
 </body>
 </html>
 

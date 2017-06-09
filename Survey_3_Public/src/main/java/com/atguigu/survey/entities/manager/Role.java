@@ -6,31 +6,22 @@ public class Role {
     private Integer roleId;
 
     private String roleName;
-
+    
     private Set<Auth> authSet;
     
-    public Set<Auth> getAuthSet() {
-		return authSet;
+    public Role() {
+    	
 	}
 
-	public void setAuthSet(Set<Auth> authSet) {
-		this.authSet = authSet;
+    public Role(Integer roleId, String roleName) {
+		super();
+		this.roleId = roleId;
+		this.roleName = roleName;
 	}
 
 	@Override
 	public String toString() {
 		return "Role [roleId=" + roleId + ", roleName=" + roleName + "]";
-	}
-
-	public Role() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Role(Integer roleId, String roleName) {
-		super();
-		this.roleId = roleId;
-		this.roleName = roleName;
 	}
 
 	public Integer getRoleId() {
@@ -48,4 +39,12 @@ public class Role {
     public void setRoleName(String roleName) {
         this.roleName = roleName == null ? null : roleName.trim();
     }
+    
+    public Set<Auth> getAuthSet() {
+		return authSet;
+	}
+    
+    public void setAuthSet(Set<Auth> authSet) {
+		this.authSet = authSet;
+	}
 }

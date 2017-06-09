@@ -20,4 +20,12 @@ public interface AuthMapper {
 
 	void batchDelete(@Param("authIdList")List<Integer> authIdList);
 
+	void removeOldRelationship(Integer authId);
+
+	void saveNewRelationship(@Param("authId")Integer authId,@Param("resIdList")List<Integer> resIdList);
+
+	List<Integer> getCurrentResIdList(Integer authId);
+
+	
+
 }

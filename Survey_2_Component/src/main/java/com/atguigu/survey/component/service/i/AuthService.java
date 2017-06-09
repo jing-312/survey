@@ -14,5 +14,9 @@ public interface AuthService {
 
 	void updateAuthName(Auth auth);
 
+	void dispatcher(Integer authId, List<Integer> resIdList);
+
+	List<Integer> getCurrentResIdList(Integer authId);
+
 
 }

@@ -19,4 +19,8 @@ public interface UserMapper {
 	int getNameCount(String userName);
 
 	User getUserByLogin(@Param("userName")String userName, @Param("userPwd")String userPwd);
+
+	void batchUpdateCodeArr(@Param("userList")List<User> userList);
+
+	void saveRelationShip(Integer userId, Integer roleId);
 }

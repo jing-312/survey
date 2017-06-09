@@ -59,7 +59,7 @@
 								</td>
 								
 								<td>
-									<a class="btn btn-default" href="#">权限分配资源</a>
+									<a class="btn btn-default" href="manager/auth/toDispatcherUI/${auth.authId }">权限分配资源</a>
 								</td>
 							</tr>
 						</c:forEach>

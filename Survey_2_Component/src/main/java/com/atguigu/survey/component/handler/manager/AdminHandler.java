@@ -25,7 +25,8 @@ public class AdminHandler {
 	@Autowired
 	private AdminService adminService;
 	@Autowired
-	private RoleService roleService; 
+	private RoleService roleService;
+	
 	@RequestMapping("/manager/admin/doDispatcher")
 	public String doDispatcher(
 			@RequestParam("adminId") Integer adminId, 

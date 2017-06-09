@@ -101,4 +101,11 @@
 		where admin_id=#{adminId}
 	</update>
 	
+	<update id="batchUpdateCodeArr" parameterType="java.util.List">
+		<foreach collection="adminList" item="admin" separator=";">
+			update manager_admin set code_arr=#{admin.codeArrStr} 
+			where admin_id=#{admin.adminId}
+		</foreach>
+	</update>
+	
 </mapper>

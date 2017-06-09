@@ -24,4 +24,6 @@ public interface ResService {
 
 	Res getResByPath(String servletPath);
 
+	List<Res> getAll();
+
 }

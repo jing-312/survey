@@ -31,4 +31,19 @@
   delete from manager_auth where auth_id in
   <foreach collection="authIdList" item="authId" open="(" close=")" separator=",">#{authId}</foreach>
   </delete>
+  <delete id="removeOldRelationship">
+		delete from inner_auth_res where auth_id=#{authId}
+	</delete>
+	<insert id="saveNewRelationship">
+		<foreach collection="resIdList" item="resId" separator=";">
+			insert
+			into inner_auth_res (auth_id, res_id)
+			values
+			(#{authId,jdbcType=INTEGER}, #{resId,jdbcType=INTEGER})
+		</foreach>
+	</insert>
+	<select id="getCurrentResIdList" resultType="integer">
+		select res_id from
+		inner_auth_res where auth_id=#{authId}
+	</select>
 </mapper>

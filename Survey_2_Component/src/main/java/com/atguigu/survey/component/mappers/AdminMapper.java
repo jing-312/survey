@@ -35,4 +35,6 @@ public interface AdminMapper {
 	Set<Role> getRoleSetDeeply(Integer adminId);
 
 	void updateCodeArr(@Param("adminId")Integer adminId, @Param("codeArr")String codeArr);
+
+	void batchUpdateCodeArr(@Param("adminList")List<Admin> adminList);
 }

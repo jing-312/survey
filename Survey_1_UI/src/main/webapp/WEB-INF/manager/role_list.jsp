@@ -55,7 +55,7 @@
 								</td>
 								
 								<td>
-									<a class="btn btn-default" href="#">权限分配资源</a>
+									<a class="btn btn-default" href="manager/role/toDispatcherUI/${role.roleId}">角色分配权限</a>
 								</td>
 							</tr>
 						</c:forEach>

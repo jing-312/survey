@@ -175,7 +175,6 @@ public class DataprocessUtils {
 	 * @param json
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public static List<String> jsonToList(String json) {
 		return new Gson().fromJson(json, List.class);
 	}
@@ -267,7 +266,6 @@ public class DataprocessUtils {
 		return target;
 	}
 	
-
 	/**
 	 * 作用：决定参与调查页面上的input标签是否回显
 	 * @param pageContext
@@ -275,7 +273,6 @@ public class DataprocessUtils {
 	 * 	选择题：checked="checked"
 	 * 	简答题：value="..."
 	 */
-	@SuppressWarnings("unchecked")
 	public static String determineRedisplay(PageContext pageContext) {
 		
 		//1.获取HttpSession对象
@@ -388,20 +385,21 @@ public class DataprocessUtils {
 		
 		return Integer.parseInt(questionIdStr);
 	}
+	
 	/**
-	 * 用来实现资源收集，对资源的统一处理。能保证资源的统一性。
+	 * 处理servletPath，去除后面附加的数据部分
+	 * 当前项目的规范：/名称空间/模块名/操作名/参数/...
 	 * @param servletPath
 	 * @return
 	 */
-	public static String servletPathCut( String  servletPath){
+	public static String servletPathCut(String servletPath) {
 		
 		String[] split = servletPath.split("/");
 		
 		return "/"+split[1]+"/"+split[2]+"/"+split[3];
-		
 	}
-
-/*/**
+	
+	/**
 	 * 根据深度加载的角色集合计算用户权限码数组
 	 * @param roleSet
 	 * @param maxPos 系统中最大的权限位的值，加1后就是权限码数组的长度
@@ -450,6 +448,7 @@ public class DataprocessUtils {
 		//9.将codeArr转换为字符串
 		return convertCodeArr2Str(codeArr);
 	}
+	
 	/**
 	 * 将权限码数组转换为逗号分隔的字符串
 	 * @param codeArr
@@ -465,6 +464,7 @@ public class DataprocessUtils {
 		
 		return builder.substring(1);
 	}
+	
 	/**
 	 * 权限验证工具方法
 	 * @param codeArrStr
@@ -492,4 +492,5 @@ public class DataprocessUtils {
 		//6.结果非零时表示其有权限
 		return result != 0;
 	}
+	
 }

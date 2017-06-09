@@ -11,17 +11,11 @@ public class Res {
 
     private Integer resPos;
     
-    
-
-    @Override
-	public String toString() {
-		return "Res [resId=" + resId + ", servletPath=" + servletPath + ", publicStatus=" + publicStatus + ", resCode="
-				+ resCode + ", resPos=" + resPos + "]";
+    public Res() {
+    	
 	}
 
-    
-    
-	public Res(Integer resId, String servletPath, Boolean publicStatus, Integer resCode, Integer resPos) {
+    public Res(Integer resId, String servletPath, Boolean publicStatus, Integer resCode, Integer resPos) {
 		super();
 		this.resId = resId;
 		this.servletPath = servletPath;
@@ -30,14 +24,11 @@ public class Res {
 		this.resPos = resPos;
 	}
 
-
-
-	public Res() {
-		super();
-		// TODO Auto-generated constructor stub
+	@Override
+	public String toString() {
+		return "Res [resId=" + resId + ", servletPath=" + servletPath + ", publicStatus=" + publicStatus + ", resCode="
+				+ resCode + ", resPos=" + resPos + "]";
 	}
-
-
 
 	public Integer getResId() {
         return resId;

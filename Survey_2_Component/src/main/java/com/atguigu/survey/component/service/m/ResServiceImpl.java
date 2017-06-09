@@ -62,4 +62,8 @@ public class ResServiceImpl implements ResService {
 	}
 
 	
+	public List<Res> getAll() {
+		return resMapper.selectAll();
+	}
+	
 }

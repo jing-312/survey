@@ -7,12 +7,15 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.atguigu.survey.component.service.i.AuthService;
 import com.atguigu.survey.component.service.i.RoleService;
 import com.atguigu.survey.e.RemoveRoleFailedException;
+import com.atguigu.survey.entities.manager.Auth;
 import com.atguigu.survey.entities.manager.Role;
 import com.atguigu.survey.utils.GlobaleMessage;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
@@ -24,6 +27,49 @@ public class RoleHandler {
 	@Autowired
 	private RoleService roleService;
 	
+	@Autowired
+	private AuthService authService;
+	
+	/**
+	 * 为角色分配具体的权限功能的具体实现。
+	 * @param roleId
+	 * @param authList
+	 * @return
+	 */
+	@RequestMapping("/manager/role/dispatcher")
+	public String dispatcher(@RequestParam("roleId") Integer roleId,
+			@RequestParam(value="authIdList",required=false) List<Integer> authIdList) {
+		
+		roleService.dispatcher(roleId, authIdList);
+		
+		return "redirect:/manager/role/showList";
+	}
+	
+	/**
+	 * 进行相关的查询，并设置数据回显。
+	 * @param roleId
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/manager/role/toDispatcherUI/{roleId}")
+	public String toDispatcherUI(
+				@PathVariable("roleId") Integer roleId,Map<String,Object> map){
+		
+		List<Auth> authList = authService.getAllAuth();
+		
+		map.put("authList",authList);
+		
+		List<Integer> currentAuthIdList = roleService.getCurrentAuthIdList(roleId);
+		
+		map.put("currentAuthIdList",currentAuthIdList);
+		
+		return "manager/dispatcher_role_auth";
+	}
+	/**
+	 * 用来修改role名称的具体方法。
+	 * @param role
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("/manager/role/updateRole")
 	public Map<String,String> updateRole(Role role){

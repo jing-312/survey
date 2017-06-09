@@ -16,5 +16,9 @@ public interface RoleService {
 
 	List<Role> getRoleList();
 
+	List<Integer> getCurrentAuthIdList(Integer roleId);
+
+	void dispatcher(Integer roleId, List<Integer> authList);
+
 
 }

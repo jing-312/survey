@@ -9,23 +9,14 @@ public class Auth {
     
     private Set<Res> resSet;
     
-    public Set<Res> getResSet() {
-		return resSet;
+    public Auth() {
+		
 	}
 
-	public void setResSet(Set<Res> resSet) {
-		this.resSet = resSet;
-	}
-
-	public Auth(Integer authId, String authName) {
+    public Auth(Integer authId, String authName) {
 		super();
 		this.authId = authId;
 		this.authName = authName;
-	}
-
-	public Auth() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -48,4 +39,12 @@ public class Auth {
     public void setAuthName(String authName) {
         this.authName = authName == null ? null : authName.trim();
     }
+    
+    public Set<Res> getResSet() {
+		return resSet;
+	}
+    
+    public void setResSet(Set<Res> resSet) {
+		this.resSet = resSet;
+	}
 }

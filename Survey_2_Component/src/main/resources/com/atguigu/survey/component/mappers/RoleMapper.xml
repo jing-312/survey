@@ -47,10 +47,37 @@
 			values(#{roleId},#{authId})
 		</foreach>
 	</insert>
-
-	<select id="getRoleByName" resultMap="BaseResultMap">
-		select role_id, role_name
-		from manager_role
-		where role_name=#{roleName}
+	<resultMap type="com.atguigu.survey.entities.manager.Role" id="getRoleDeeplyByNameResultMap">
+		<id column="role_id" property="roleId" jdbcType="INTEGER" />
+		<result column="role_name" property="roleName" jdbcType="CHAR" />
+		<collection property="authSet" ofType="com.atguigu.survey.entities.manager.Auth">
+			<id column="auth_id" property="authId" jdbcType="INTEGER" />
+			<result column="auth_name" property="authName" jdbcType="CHAR" />
+			<collection property="resSet" ofType="com.atguigu.survey.entities.manager.Res">
+				<id column="res_id" property="resId" jdbcType="INTEGER" />
+			    <result column="servlet_path" property="servletPath" jdbcType="CHAR" />
+			    <result column="public_status" property="publicStatus" jdbcType="BIT" />
+			    <result column="res_code" property="resCode" jdbcType="INTEGER" />
+			    <result column="res_pos" property="resPos" jdbcType="INTEGER" />
+			</collection>
+		</collection>
+	</resultMap>
+	<select id="getRoleDeeplyByName" resultMap="getRoleDeeplyByNameResultMap">
+		SELECT
+		    role.`role_id`,
+		    role.`role_name`,
+		    auth.`auth_id`,
+		    auth.`auth_name`,
+		    res.`res_id`,
+		    res.`servlet_path`,
+		    res.`res_code`,
+		    res.`res_pos`,
+		    res.`public_status`
+		FROM `manager_role` role
+		LEFT JOIN `inner_role_auth` ON role.`role_id`=inner_role_auth.`role_id`
+		LEFT JOIN `manager_auth` auth ON inner_role_auth.`auth_id`=auth.`auth_id`
+		LEFT JOIN `inner_auth_res` ON auth.`auth_id`=inner_auth_res.`auth_id`
+		LEFT JOIN `manager_res` res ON inner_auth_res.`res_id`=res.`res_id`
+		WHERE role_name=#{roleName}
 	</select>
 </mapper>

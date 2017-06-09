@@ -7,13 +7,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.atguigu.survey.component.service.i.AuthService;
+import com.atguigu.survey.component.service.i.ResService;
 import com.atguigu.survey.e.RemoveAuthFailedException;
 import com.atguigu.survey.entities.manager.Auth;
+import com.atguigu.survey.entities.manager.Res;
 import com.atguigu.survey.utils.GlobaleMessage;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
@@ -22,6 +25,31 @@ public class AuthHandler {
 
 	@Autowired
 	private AuthService authService;
+	@Autowired
+	private ResService resService;
+	
+	@RequestMapping("/manager/auth/dispatcher")
+	public String doDispatcher(
+			@RequestParam(value="resIdList", required=false) List<Integer> resIdList,
+			@RequestParam("authId") Integer authId) {
+		
+		authService.dispatcher(authId,resIdList);
+		
+		return "redirect:/manager/auth/showList";
+	}
+	
+	@RequestMapping("/manager/auth/toDispatcherUI/{authId}")
+	public String toDispatcherUI(@PathVariable("authId") Integer authId,Map<String, Object> map) {
+		
+		List<Res> resList = resService.getAll();
+		map.put("resList", resList);
+		
+		List<Integer> currentIdList = authService.getCurrentResIdList(authId);
+		map.put("currentIdList", currentIdList);
+		
+		return "manager/dispatcher_auth_res";
+	}
+	
 	
 	/**
 	 * 使用Ajax完成了权限的更新更新功能。
