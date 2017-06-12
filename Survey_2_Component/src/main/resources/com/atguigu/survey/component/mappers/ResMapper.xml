@@ -34,6 +34,7 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select res_id, servlet_path, public_status, res_code, res_pos
     from manager_res
+    order by servlet_path
   </select>
   <select id="checkResExists" resultType="int">
   	select count(*) from manager_res

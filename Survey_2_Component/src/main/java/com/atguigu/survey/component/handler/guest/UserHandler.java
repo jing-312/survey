@@ -18,19 +18,26 @@ public class UserHandler {
 
 	@Autowired
 	private UserService userService;
+
 	/**
-	 * 用户注册方法
-	 * @param user
+	 * 用户注册系统方法，增加了权限之后的方法。
 	 * @return
 	 */
 	@RequestMapping("/guest/user/regist")
-	public String userRegist(User user){
+	public String regist(User user){
 		
-		userService.insert(user);
+		userService.regist(user);
 		
 		return "guest/user_loginUI";
 	}
 	
+	
+	/**
+	 * 用户登录系统。
+	 * @param user
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/guest/user/login")
 	public String userLongin(User user,HttpSession session){
 		//用来判断用户名是否已经登录。
@@ -42,8 +49,11 @@ public class UserHandler {
 				
 		
 	}
-	
-	
+	/**
+	 * 用户退出登录系统
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/guest/user/logout")
 	public String tologout(HttpSession session){
 		

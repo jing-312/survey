@@ -22,71 +22,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired 
 	private UserMapper userMapper;
-
-	@Autowired
-	private RoleMapper roleMapper;
-	@Autowired
-	private ResMapper resMapper;
-	public void insert(User user) {
-		String userName = user.getUserName();
-		String userPwd = user.getUserPwd();
-		
-		int count = userMapper.getNameCount(userName);
-		
-		if(count>0){
-			throw new UserNameAlreadyExistsException(GlobaleMessage.USER_NAME_ALREADY_EXISTS);
-		}
-		
-		String md5 = DataprocessUtils.md5(userPwd);
-		
-		user.setUserPwd(md5);
-		
-		userMapper.insert(user);
-	}
-	/**
-	 * 实现用户注册功能。
-	 *//*
-	public void insert(User user){
-		
-		String userName = user.getUserName();
-		String userPwd = user.getUserPwd();
-		
-		int nameCount = userMapper.getNameCount(userName);
-		
-		if(nameCount>0){
-			throw new UserNameAlreadyExistsException(GlobaleMessage.USER_NAME_ALREADY_EXISTS);
-		}
-		
-		user.setUserPwd(DataprocessUtils.md5(userPwd));
-		
-		String roleName = null;
-		
-		if(user.getCompany()){
-			roleName = "企业用户";
-		}else {
-			roleName = "个人用户";
-		}
-		
-		Role role = roleMapper.getRoleDeeplyByName(roleName);
-		
-		Set<Role> roleSet = new HashSet<Role>();
-		
-		roleSet.add(role);
-		
-		Integer maxPos = resMapper.getSystemMaxPos();
-		
-		String codeArrStr = DataprocessUtils.calculateCodeArr(roleSet, maxPos);
-		
-		user.setCodeArrStr(codeArrStr);
-		
-		userMapper.insert(user);
-		
-		Integer userId = user.getUserId();
-		Integer roleId = role.getRoleId();
-		
-		userMapper.saveRelationShip(userId ,roleId);
-	}*/
 	
+	@Autowired 
+	private RoleMapper roleMapper;
+	
+	@Autowired 
+	private ResMapper resMapper;
 	/**
 	 * 实现用户登录功能。
 	 */
@@ -104,5 +45,47 @@ public class UserServiceImpl implements UserService {
 			}
 			
 		return loginUser;
+	}
+
+
+	public void regist(User user) {
+		String userName = user.getUserName();
+		String userPwd = user.getUserPwd();
+		
+		int  count = userMapper.getUserCount(userName);
+		
+		if(count>0){
+			throw new UserNameAlreadyExistsException(GlobaleMessage.USER_NAME_ALREADY_EXISTS);
+		}
+		
+		user.setUserPwd(DataprocessUtils.md5(userPwd));
+		
+		String roleName = null;
+		
+		if(user.getCompany()){
+			
+			roleName = "企业用户";
+		}else{
+			
+			roleName = "个人用户";
+		}
+		
+		Role role = roleMapper.getRoleDeeplyByName(roleName);
+		
+		Set<Role> roleSet = new HashSet<Role>();
+		roleSet.add(role);
+		
+		Integer maxPos = resMapper.getSystemMaxPos();
+		
+		String codeArrStr = DataprocessUtils.calculateCodeArr(roleSet, maxPos);
+		
+		user.setCodeArrStr(codeArrStr);
+		
+		userMapper.insert(user);
+		
+		Integer userId = user.getUserId();
+		Integer roleId = role.getRoleId();
+		
+		userMapper.saveRelationShip(userId ,roleId);
 	}
 }

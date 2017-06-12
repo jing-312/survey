@@ -1,9 +1,10 @@
 package com.atguigu.survey.component.mappers;
 
-import com.atguigu.survey.entities.guest.User;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
+import com.atguigu.survey.entities.guest.User;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userId);
@@ -16,11 +17,11 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-	int getNameCount(String userName);
+	int getUserCount(String userName);
 
-	User getUserByLogin(@Param("userName")String userName, @Param("userPwd")String userPwd);
+	User getUserByLogin(@Param("userName") String userName, @Param("userPwd") String userPwd);
 
-	void batchUpdateCodeArr(@Param("userList")List<User> userList);
+	void saveRelationShip(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 
-	void saveRelationShip(Integer userId, Integer roleId);
+	void batchUpdateCodeArr(@Param("userList") List<User> userList);
 }

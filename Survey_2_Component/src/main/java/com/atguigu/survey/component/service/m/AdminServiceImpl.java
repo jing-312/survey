@@ -48,7 +48,7 @@ public class AdminServiceImpl implements AdminService {
 	public void saveAdmin(Admin admin) {
 		String adminName = admin.getAdminName();
 		
-		int conut = adminMapper.selectAdminByName(adminName);
+		int conut = adminMapper.getAdminCountByAdminName(adminName);
 		
 		if(conut>0){
 			

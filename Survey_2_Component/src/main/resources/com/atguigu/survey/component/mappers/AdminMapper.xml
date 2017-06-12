@@ -24,12 +24,14 @@
 		admin_pwd = #{adminPwd,jdbcType=CHAR}
 		where admin_id = #{adminId,jdbcType=INTEGER}
 	</update>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+
+	<select id="selectAdminByName" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
 		select admin_id, admin_name, admin_pwd, code_arr
 		from manager_admin
 		where admin_id = #{adminId,jdbcType=INTEGER}
 	</select>
+	
 	<select id="selectAll" resultMap="BaseResultMap">
 		select admin_id, admin_name, admin_pwd, code_arr
 		from manager_admin

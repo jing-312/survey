@@ -37,4 +37,6 @@ public interface AdminMapper {
 	void updateCodeArr(@Param("adminId")Integer adminId, @Param("codeArr")String codeArr);
 
 	void batchUpdateCodeArr(@Param("adminList")List<Admin> adminList);
+
+	int getAdminCountByAdminName(String adminName);
 }
