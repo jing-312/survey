@@ -175,6 +175,7 @@ public class DataprocessUtils {
 	 * @param json
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static List<String> jsonToList(String json) {
 		return new Gson().fromJson(json, List.class);
 	}
@@ -273,6 +274,7 @@ public class DataprocessUtils {
 	 * 	选择题：checked="checked"
 	 * 	简答题：value="..."
 	 */
+	@SuppressWarnings("unchecked")
 	public static String determineRedisplay(PageContext pageContext) {
 		
 		//1.获取HttpSession对象
