@@ -13,4 +13,5 @@ public class GlobaleNames {
 	public static final String CURRENT_BAG = "CURRENT_BAG";
 	public static final String CURRENT_INDEX = "CURRENT_INDEX";
 	public static final String LOGIN_Admin = "loginAdmin";
+	public static final String Ajax_Request = "THIS_IS_AN_AJAX_REQUEST";
 }

@@ -8,8 +8,15 @@
 			var roleName = this.value;
 			
 			var url = "${pageContext.request.contextPath}/manager/role/updateRole";
-			var DataParam = {"roleId":roleId,"roleName":roleName,"time":new Date()};
+			var DataParam = {"roleId":roleId,"ajaxFlag":"THIS_IS_AN_AJAX_REQUEST","roleName":roleName,"time":new Date()};
 			var callBack = function(respData){
+				
+				var ajaxInterceptorMessage = respData.ajaxInterceptorMessage;
+				if(ajaxInterceptorMessage != null) {
+					alert(ajaxInterceptorMessage);
+					return ;
+				}
+				
 				var message = respData.message;
 				if(message == "success"){
 					alert("更新role名称成功！");

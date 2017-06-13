@@ -61,8 +61,10 @@
 	</bean>
 	
 	<mvc:interceptors>
+		<bean class="com.atguigu.survey.interceptors.RequestBinderInterceptor"/>
 	<!--<bean class="com.atguigu.survey.interceptors.LoginInterceptor"/> -->
 		<bean class="com.atguigu.survey.interceptors.ResLnterceptor"/>
+		<bean class="com.atguigu.survey.interceptors.AjaxAuthorityInterceptors"/>
 		<bean class="com.atguigu.survey.interceptors.AuthorityInterceptor"/>
 	</mvc:interceptors>
 	

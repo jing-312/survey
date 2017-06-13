@@ -58,7 +58,6 @@
 	
 	<!-- 配置事务通知 -->
 	<tx:advice transaction-manager="dataSourceTransactionManager" id="txAdvice">
-		
 		<tx:attributes>
 			<!-- 配置具体事务方法的事务属性 -->
 			<!-- ★注意：service方法如果没有在这里配置事务属性，那么就没有事务 -->
@@ -66,15 +65,34 @@
 			<tx:method name="get*" read-only="true"/>
 			<tx:method name="check*" read-only="true"/>
 			<tx:method name="find*" read-only="true"/>
+			<tx:method name="login" read-only="true"/>
 			
 			<!-- 增删改方法 -->
-			<tx:method name="save*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+		<tx:method name="save*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
 			<tx:method name="delete*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
 			<tx:method name="update*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
 			<tx:method name="batch*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
-			
+			<tx:method name="regist" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+			<tx:method name="dispatcher*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+			<tx:method name="create*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
 		</tx:attributes>
-		
 	</tx:advice>
+	
+	<!--配置日志相关的功能  -->
+	<bean  id="logRecorder" class="com.atguigu.survey.log.aspects.LogRecorder" />
+	
+	<aop:config>
+		<aop:pointcut expression="(execution(* *..*Service.save*(..)) or 
+									execution(* *..*Service.delete*(..)) or  
+									execution(* *..*Service.update*(..)) or  
+									execution(* *..*Service.batch*(..)) or  
+									execution(* *..*Service.regist(..)) or  
+									execution(* *..*Service.dispatcher*(..))) and !bean(logServiceImpl)" id="logPointCut"/>
+									
+		<aop:aspect id="logAspect" ref="logRecorder">
+			<aop:around method="logRecord" pointcut-ref="logPointCut"/>
+		</aop:aspect>
+	</aop:config>
+	
 	
 </beans>

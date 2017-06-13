@@ -8,8 +8,15 @@
 			var authName = this.value;
 			
 			var url="${pageContext.request.contextPath}/manager/auth/updateAuth";
-			var paramData={"authId":authId,"authName":authName,"time":new Date()};
+			var paramData={"authId":authId,"ajaxFlag":"THIS_IS_AN_AJAX_REQUEST","authName":authName,"time":new Date()};
 			var callBack=function(respData){
+				
+				var ajaxInterceptorMessage = respData.ajaxInterceptorMessage;
+				if(ajaxInterceptorMessage != null) {
+					alert(ajaxInterceptorMessage);
+					return ;
+				}
+				
 				var message = respData.message;
 				if(message == "success"){
 					alert("更新权限名称成功！");

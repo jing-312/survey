@@ -16,8 +16,15 @@
 			
 			//准备$.post()函数需要的参数
 			var url = "${pageContext.request.contextPath}/manager/res/toggleResStatus";
-			var paramData = {"resId":resId,"time":new Date()};
+			var paramData = {"resId":resId,"ajaxFlag":"THIS_IS_AN_AJAX_REQUEST","time":new Date()};
 			var callBack = function(respData){
+				
+				var ajaxInterceptorMessage = respData.ajaxInterceptorMessage;
+				if(ajaxInterceptorMessage != null) {
+					alert(ajaxInterceptorMessage);
+					return ;
+				}
+				
 				//{statusResult: "公共资源", invokeResult: "success"}
 				var invokeResult = respData.invokeResult;
 				

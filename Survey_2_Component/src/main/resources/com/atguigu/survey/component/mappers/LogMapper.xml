@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.survey.component.mappers.LogMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.survey.entities.manager.Log" >
+    <id column="log_id" property="logId" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="CHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="CHAR" />
+    <result column="method_name" property="methodName" jdbcType="CHAR" />
+    <result column="method_type" property="methodType" jdbcType="CHAR" />
+    <result column="input_data" property="inputData" jdbcType="VARCHAR" />
+    <result column="output_data" property="outputData" jdbcType="VARCHAR" />
+    <result column="exception_type" property="exceptionType" jdbcType="CHAR" />
+    <result column="exception_message" property="exceptionMessage" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.survey.entities.manager.Log" >
+    insert into manager_log (log_id, operator, operate_time, 
+      method_name, method_type, input_data, 
+      output_data, exception_type, exception_message
+      )
+    values (#{logId,jdbcType=INTEGER}, #{operator,jdbcType=CHAR}, #{operateTime,jdbcType=CHAR}, 
+      #{methodName,jdbcType=CHAR}, #{methodType,jdbcType=CHAR}, #{inputData,jdbcType=VARCHAR}, 
+      #{outputData,jdbcType=VARCHAR}, #{exceptionType,jdbcType=CHAR}, #{exceptionMessage,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.survey.entities.manager.Log" >
+    update manager_log
+    set operator = #{operator,jdbcType=CHAR},
+      operate_time = #{operateTime,jdbcType=CHAR},
+      method_name = #{methodName,jdbcType=CHAR},
+      method_type = #{methodType,jdbcType=CHAR},
+      input_data = #{inputData,jdbcType=VARCHAR},
+      output_data = #{outputData,jdbcType=VARCHAR},
+      exception_type = #{exceptionType,jdbcType=CHAR},
+      exception_message = #{exceptionMessage,jdbcType=VARCHAR}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select log_id, operator, operate_time, method_name, method_type, input_data, output_data, 
+    exception_type, exception_message
+    from manager_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select log_id, operator, operate_time, method_name, method_type, input_data, output_data, 
+    exception_type, exception_message
+    from manager_log
+  </select>
+</mapper>
