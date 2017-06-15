@@ -26,6 +26,28 @@
       #{outputData,jdbcType=VARCHAR}, #{exceptionType,jdbcType=CHAR}, #{exceptionMessage,jdbcType=VARCHAR}
       )
   </insert>
+  <insert id="saveLogIntoCurrentMonth" parameterType="com.atguigu.survey.entities.manager.Log" >
+    insert into ${tableName} (
+    	operator, 
+    	operate_time, 
+      	method_name, 
+      	method_type, 
+      	input_data, 
+      	output_data, 
+      	exception_type, 
+      	exception_message
+      )
+    values (
+    	#{log.operator,jdbcType=CHAR}, 
+    	#{log.operateTime,jdbcType=CHAR}, 
+      	#{log.methodName,jdbcType=CHAR}, 
+      	#{log.methodType,jdbcType=CHAR}, 
+      	#{log.inputData,jdbcType=VARCHAR}, 
+      	#{log.outputData,jdbcType=VARCHAR}, 
+      	#{log.exceptionType,jdbcType=CHAR}, 
+      	#{log.exceptionMessage,jdbcType=VARCHAR}
+      )
+  </insert>
   <update id="updateByPrimaryKey" parameterType="com.atguigu.survey.entities.manager.Log" >
     update manager_log
     set operator = #{operator,jdbcType=CHAR},
@@ -48,5 +70,11 @@
     select log_id, operator, operate_time, method_name, method_type, input_data, output_data, 
     exception_type, exception_message
     from manager_log
+  </select>
+  <update id="createTable">
+  	create table if not exists ${tableName} like survey.manager_log
+  </update>
+  <select id="getTableNames" resultType="String">
+  select table_name from information_schema.tables where table_schema = survey_log
   </select>
 </mapper>

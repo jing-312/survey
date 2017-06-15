@@ -12,7 +12,10 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,12 +26,15 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.jstl.core.LoopTagStatus;
 
+import org.springframework.context.support.StaticApplicationContext;
+
 import com.atguigu.survey.entities.guest.Bag;
 import com.atguigu.survey.entities.guest.Question;
 import com.atguigu.survey.entities.manager.Auth;
 import com.atguigu.survey.entities.manager.Res;
 import com.atguigu.survey.entities.manager.Role;
 import com.google.gson.Gson;
+import com.mysql.fabric.xmlrpc.base.Data;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
@@ -494,5 +500,28 @@ public class DataprocessUtils {
 		//6.结果非零时表示其有权限
 		return result != 0;
 	}
+	/**
+	 * 用来创建数据库的表的表名
+	 * @param offset 偏移量
+	 * -1：上一个月
+	 * 0：本月
+	 * 1：下一个月
+	 * @return
+	 */
+	public static String generateTableName(int offset){
+		
+		String tableName = "AUTO_LOG_";
+		
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.add(Calendar.MONTH, offset);
+		
+		Date time = calendar.getTime();
+		
+		tableName = tableName + new SimpleDateFormat("yyyy_MM").format(time);
+		
+		return tableName;
 	
+		
+	}
 }

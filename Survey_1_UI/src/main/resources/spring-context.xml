@@ -16,21 +16,37 @@
 	
 	<!-- 引入外部的属性文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties"/>
-	
-	<!-- 配置数据源 -->
-	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<bean id="dataSourceTemplate" class="com.mchange.v2.c3p0.ComboPooledDataSource" abstract="true" >
 		<property name="user" value="${jdbc.user}"/>
 		<property name="password" value="${jdbc.password}"/>
-		<property name="jdbcUrl" value="${jdbc.url}"/>
 		<property name="driverClass" value="${jdbc.driver}"/>
 	</bean>
 	
+	
+	<!-- 配置数据源 -->
+	<bean id="dataSourceMain" parent="dataSourceTemplate" >
+		<property name="jdbcUrl" value="${jdbc.main.url}"/>
+	</bean>
+	<bean id="dataSourceLog" parent="dataSourceTemplate" >
+		<property name="jdbcUrl" value="${jdbc.log.url}"/>
+	</bean>
+	
+	<bean class="com.atguigu.survey.log.router.LogRouter" id="logRouter">
+		
+		<property name="targetDataSources">	
+			<map>
+				<entry key="DATASOURCE_MAIN" value-ref="dataSourceMain"/>
+				<entry key="DATASOURCE_LOG" value-ref="dataSourceLog" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="dataSourceMain"></property>
+	</bean>
 	<!-- 配置SqlSessionFactory -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 指定MyBatis自身配置文件的位置 -->
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
 		<!-- 装配数据源 -->
-		<property name="dataSource" ref="comboPooledDataSource"/>
+		<property name="dataSource" ref="logRouter"/>
 		<!-- 指定实体类所在的包 -->
 		<property name="typeAliasesPackage" value="com.atguigu.survey.entities"/>
 	</bean>
@@ -43,7 +59,7 @@
 	
 	<!-- 事务管理器 -->
 	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="comboPooledDataSource"/>
+		<property name="dataSource" ref="logRouter"/>
 	</bean>
 	
 	<!-- 配置声明式事务 -->
@@ -94,5 +110,33 @@
 		</aop:aspect>
 	</aop:config>
 	
+	<!-- 监听器自动建表配置 -->
+	<bean  id="createLogTableListener" class="com.atguigu.survey.log.aspects.CreateLogTableListener" />
+	<!-- 配置石英定时器 -->
+	<bean id="jobDetailBean" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.atguigu.survey.log.quartz.CreateLogTableScheduler"/>
+		
+		<!-- 以下面的方式注入需要的组件 -->
+		<property name="jobDataMap">
+			<map>
+				<entry key="logService" value-ref="logServiceImpl"/>
+			</map>
+		</property>
+	</bean>
 	
+	<bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="jobDetailBean"/>
+		
+		<!-- 测试用的表达式：*/5 * * * * ? -->
+		<!-- 正式表达式：0 0 0 15 * ? -->
+		<property name="cronExpression" value="0 0 0 15 * ?"/>
+	</bean>
+	
+	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTriggerBean"/>
+			</list>
+		</property>
+	</bean>
 </beans>

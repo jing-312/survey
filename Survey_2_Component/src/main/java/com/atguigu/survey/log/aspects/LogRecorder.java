@@ -101,6 +101,9 @@ public class LogRecorder {
 			String operator = userPart + "/" + adminPart;
 			
 			Log log = new Log(null, operator, operateTime, methodName, methodType, inputData, outputData, exceptionType, exceptionMessage);
+			
+			RoutingKeybinder.bindKey(RoutingKeybinder.DATASOURCE_LOG);
+			
 			logService.saveLog(log);
 			
 		}

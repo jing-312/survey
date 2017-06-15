@@ -6,4 +6,6 @@ public interface LogService {
 
 	void saveLog(Log log);
 
+	void createTable(String tableName);
+
 }
