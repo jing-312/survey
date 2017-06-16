@@ -18,57 +18,67 @@ import com.atguigu.survey.entities.manager.Res;
 import com.atguigu.survey.utils.DataprocessUtils;
 import com.atguigu.survey.utils.GlobaleNames;
 
-/**
- * 用来实现细粒度的权限控制的具体方法。
- * @author Administrator
- *
- */
-public class AuthTag extends SimpleTagSupport  {
-
+public class AuthTag extends SimpleTagSupport {
+	
 	private String servletPath;
 	
 	@Override
 	public void doTag() throws JspException, IOException {
-		//1，先获取ioc容器的引用：
+		
+		//1.准备工作
 		PageContext pageContext = (PageContext) getJspContext();
 		
 		ServletContext servletContext = pageContext.getServletContext();
-		//自带工具方法。
-		WebApplicationContext ioc = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
+		
+		//获取IOC容器对象的引用
+		WebApplicationContext ioc = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		
 		ResService resService = ioc.getBean(ResService.class);
 		
+		//2.根据servletPath查询Res对象
 		Res res = resService.getResByPath(servletPath);
-		
-		if(res.getPublicStatus()){
-			//不显示在页面。
-			getJspBody().invoke(null);
-			return ;
-		}
-		
-		HttpSession session = pageContext.getSession();
-		
-		if(servletPath.startsWith("/guest")){
-			User user = (User) session.getAttribute(GlobaleNames.LOGIN_USER);
-			
-			if(user != null ){
+		if(res != null){
+			//3.检查是否为公共资源
+			if(res.getPublicStatus()) {
 				
-				String codeArrStr = user.getCodeArrStr();
+				//4.执行标签体并返回函数
+				getJspBody().invoke(null);
+				return ;
 				
-				boolean hasAuthority = DataprocessUtils.checkAuthority(codeArrStr, res);
-				
-				if(hasAuthority){
-					getJspBody().invoke(null);
-					return ;
-				}
 			}
 		}
 		
-		if(servletPath.startsWith("/manager")){
-			Admin admin = (Admin)session.getAttribute(GlobaleNames.LOGIN_Admin);
+		
+		//5.检查是否登录
+		HttpSession session = pageContext.getSession();
+		
+		if(servletPath.startsWith("/guest")) {
 			
+			User user = (User) session.getAttribute(GlobaleNames.LOGIN_USER);
 			
-			if(admin != null ){
+			if(user != null) {
+				
+				//6.如果已经登录，则继续检查是否有权限
+				String codeArrStr = user.getCodeArrStr();
+				boolean hasAuthority = DataprocessUtils.checkAuthority(codeArrStr, res);
+				if(hasAuthority) {
+					
+					//7.如果有权限，则执行标签体并返回函数
+					getJspBody().invoke(null);
+					return ;
+					
+				}
+				
+			}
+			
+		}
+		
+		if(servletPath.startsWith("/manager")) {
+			
+			Admin admin = (Admin) session.getAttribute(GlobaleNames.LOGIN_Admin);
+			
+			if(admin != null) {
+				
 				String adminName = admin.getAdminName();
 				
 				if("SuperAdmin".equals(adminName)) {
@@ -77,18 +87,22 @@ public class AuthTag extends SimpleTagSupport  {
 				}
 				
 				String codeArrStr = admin.getCodeArrStr();
+				
 				boolean hasAuthority = DataprocessUtils.checkAuthority(codeArrStr, res);
 				
 				if(hasAuthority) {
 					getJspBody().invoke(null);
 					return ;
 				}
+				
 			}
+			
 		}
+		
 	}
 	
 	public void setServletPath(String servletPath) {
-		this.servletPath = "/"+servletPath;
+		this.servletPath = servletPath;
 	}
+	
 }
-

@@ -75,6 +75,22 @@
   	create table if not exists ${tableName} like survey.manager_log
   </update>
   <select id="getTableNames" resultType="String">
-  select table_name from information_schema.tables where table_schema = survey_log
+	SELECT table_name FROM information_schema.`TABLES` 
+	WHERE TABLE_SCHEMA='survey_log'
+  </select>
+  <select id="getTotalRecordNo" resultType="int">
+  	select count(*) from 
+	<foreach collection="tableNames" item="tableName" open="(" close=") union_alias" separator=" UNION ">
+		SELECT * FROM ${tableName}
+	</foreach>
+  </select>
+  <select id="getPageList" resultMap="BaseResultMap">
+  	select log_id, operator, operate_time, method_name, method_type, input_data, output_data, 
+    exception_type, exception_message
+    from 
+	<foreach collection="tableNames" item="tableName" open="(" close=") union_alias" separator=" UNION ">
+		SELECT * FROM ${tableName}
+	</foreach>
+		limit #{index},#{pageSize}
   </select>
 </mapper>

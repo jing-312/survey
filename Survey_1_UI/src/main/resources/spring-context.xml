@@ -16,7 +16,9 @@
 	
 	<!-- 引入外部的属性文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties"/>
-	<bean id="dataSourceTemplate" class="com.mchange.v2.c3p0.ComboPooledDataSource" abstract="true" >
+	<bean   id="dataSourceTemplate" 
+			class="com.mchange.v2.c3p0.ComboPooledDataSource" 
+			abstract="true" >
 		<property name="user" value="${jdbc.user}"/>
 		<property name="password" value="${jdbc.password}"/>
 		<property name="driverClass" value="${jdbc.driver}"/>
